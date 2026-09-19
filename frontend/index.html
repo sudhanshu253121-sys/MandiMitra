@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MandiMitra - Agricultural Procurement Scheduling Platform</title>
+  <meta name="description" content="MandiMitra is a next-generation agricultural procurement scheduling and live queue management platform for farmers and Mandi clerks.">
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Global Header & Navigation -->
+  <header class="app-header" id="main-header">
+    <div class="header-container">
+      <div class="brand-group" id="nav-brand-click">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10S2 17.523 2 12A10 10 0 0 1 12 2Z"/>
+            <path d="M7 13c2.5-1 5-4 5-8 0 4 2.5 7 5 8"/>
+            <path d="M12 5v14"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">MandiMitra</span>
+          <span class="brand-sub">मंडी मित्र • e-Procurement Portal</span>
+        </div>
+      </div>
+
+      <!-- Quick View Switcher (Hidden) -->
+      <nav class="view-nav" aria-label="Demo Views" style="display: none !important;">
+        <button type="button" class="view-nav-btn active" id="nav-view-auth" data-target="view-auth">
+          <span class="nav-num">1</span> Auth / Reg
+        </button>
+        <button type="button" class="view-nav-btn" id="nav-view-farmer" data-target="view-farmer">
+          <span class="nav-num">2</span> Farmer Tracker
+        </button>
+        <button type="button" class="view-nav-btn" id="nav-view-clerk" data-target="view-clerk">
+          <span class="nav-num">3</span> Clerk Queue
+        </button>
+      </nav>
+
+      <!-- Action Items: Logout, Bot Assist & Profile Badge -->
+      <div class="header-actions">
+        <button type="button" class="logout-btn" id="btn-logout" aria-label="Logout" title="Logout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sm">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span class="btn-text">Logout</span>
+        </button>
+
+        <!-- Clickable Profile Pill + Dropdown -->
+        <div class="user-pill-wrapper" id="user-pill-wrapper">
+          <div class="user-pill" id="user-profile-pill" role="button" tabindex="0" aria-expanded="false" aria-label="View farmer profile" title="View Profile">
+            <div class="avatar" id="avatar-initials">KM</div>
+            <div class="user-info">
+              <span class="user-name" id="display-user-name">Kisan Mitra</span>
+              <span class="user-role-badge" id="display-user-role">Farmer</span>
+            </div>
+            <svg class="pill-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+
+          <!-- Profile Dropdown Panel -->
+          <div class="profile-dropdown" id="profile-dropdown" role="dialog" aria-label="Farmer Profile">
+
+            <!-- Header -->
+            <div class="pd-header">
+              <div class="pd-avatar" id="pd-avatar">KM</div>
+              <div>
+                <div class="pd-name" id="pd-name">Kisan Mitra</div>
+                <div class="pd-role" id="pd-role">Farmer (किसान)</div>
+              </div>
+            </div>
+
+            <!-- Farmer Identity Section -->
+            <div class="pd-section" id="pd-farmer-section">
+              <div class="pd-section-title">🪪 Farmer Identity</div>
+              <div class="pd-row">
+                <span class="pd-label">📱 Mobile</span>
+                <span class="pd-val" id="pd-mobile">—</span>
+              </div>
+              <div class="pd-row">
+                <span class="pd-label">🪪 Aadhaar</span>
+                <span class="pd-val" id="pd-aadhaar">—</span>
+              </div>
+              <div class="pd-row">
+                <span class="pd-label">🆔 Kisan ID</span>
+                <span class="pd-val" id="pd-kisan-id">IND-AADH-9021</span>
+              </div>
+            </div>
+
+            <!-- Farmer Land & Agricultural Records Section -->
+            <div class="pd-section pd-land-section" id="pd-land-section">
+              <div class="pd-section-title">🌾 Land Details (कृषि भूमि विवरण)</div>
+              <div class="pd-row">
+                <span class="pd-label">📏 Total Farm Area</span>
+                <span class="pd-val pd-highlight-green" id="pd-land-size">4.5 Acres (1.82 Ha)</span>
+              </div>
+              <div class="pd-row">
+                <span class="pd-label">📋 Khasra / Khatauni</span>
+                <span class="pd-val" id="pd-khasra">HR-KAR-2026-KH-492</span>
+              </div>
+              <div class="pd-row">
+                <span class="pd-label">📍 Region / District</span>
+                <span class="pd-val" id="pd-land-region">Karnal, Haryana</span>
+              </div>
+              <div class="pd-row">
+                <span class="pd-label">🌱 Soil & Irrigation</span>
+                <span class="pd-val" id="pd-land-type">Alluvial • Canal & Tube Well</span>
+              </div>
+              <div class="pd-row">
+                <span class="pd-label">🌾 Sown MSP Crop</span>
+                <span class="pd-val" id="pd-land-crop">Wheat (Sharbati) / Rabi</span>
+              </div>
+              <div class="pd-row">
+                <span class="pd-label">🏛️ State Land Registry</span>
+                <span class="pd-val pd-verified" id="pd-land-status">Bhoomi / Bhulekh Linked ✓</span>
+              </div>
+            </div>
+
+            <!-- Active Token Section -->
+            <div class="pd-section" id="pd-token-section">
+              <div class="pd-section-title">🎫 Active Booking Token</div>
+              <div class="pd-token-badge" id="pd-token-badge">
+                <span class="pd-token-label">TOKEN</span>
+                <span class="pd-token-code" id="pd-token-id">—</span>
+              </div>
+              <div class="pd-row">
+                <span class="pd-label">🌾 Crop</span>
+                <span class="pd-val" id="pd-crop">—</span>
+              </div>
+              <div class="pd-row">
+                <span class="pd-label">⚖️ Quantity</span>
+                <span class="pd-val" id="pd-qty">—</span>
+              </div>
+              <div class="pd-row">
+                <span class="pd-label">🏢 Mandi</span>
+                <span class="pd-val" id="pd-mandi">—</span>
+              </div>
+              <div class="pd-row">
+                <span class="pd-label">📅 Slot Date</span>
+                <span class="pd-val" id="pd-date">—</span>
+              </div>
+              <div class="pd-row">
+                <span class="pd-label">💰 Est. MSP</span>
+                <span class="pd-val pd-msp" id="pd-msp">—</span>
+              </div>
+              <div class="pd-row">
+                <span class="pd-label">🔒 Status</span>
+                <span class="pd-val" id="pd-status"><span class="status-tag booked">Slot Confirmed</span></span>
+              </div>
+            </div>
+
+            <!-- No-token placeholder (shown before booking) -->
+            <div class="pd-no-token" id="pd-no-token" style="display:none;">
+              <span>📋 No active booking yet. Book a slot below.</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Multi-View Container -->
+  <main class="app-main" id="app-viewport">
+
+    <!-- ============================================================= -->
+    <!-- VIEW 1: AUTH & REGISTRATION VIEW                              -->
+    <!-- ============================================================= -->
+    <section class="view-section active" id="view-auth">
+      <div class="auth-split-wrapper">
+        
+        <!-- Left Side: Mission & Branding Showcase -->
+        <div class="auth-branding-panel">
+          <div class="branding-badge">
+            <span class="gov-seal-icon">🏛️</span>
+            <span>Government of India • Ministry of Agriculture</span>
+          </div>
+          
+          <h1 class="branding-heading">Smart, Fair & Zero-Wait Agricultural Procurement</h1>
+          <p class="branding-desc">
+            MandiMitra streamlines grain procurement at APMC mandis. Schedule your drop-off slot, track real-time weighbridge queues, and receive direct MSP subsidy credits with transparent IoT automation.
+          </p>
+
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feat-icon">⚡</div>
+              <div>
+                <strong>Zero Wait-Time</strong>
+                <p>Book guaranteed delivery slots & skip multi-day physical mandi queues.</p>
+              </div>
+            </div>
+            <div class="feature-card">
+              <div class="feat-icon">⚖️</div>
+              <div>
+                <strong>IoT Kanta Weighbridge</strong>
+                <p>Tamper-proof digital weight logs transmitted straight to the cloud.</p>
+              </div>
+            </div>
+            <div class="feature-card">
+              <div class="feat-icon">💳</div>
+              <div>
+                <strong>Direct MSP Settlement</strong>
+                <p>Instant digital receipts linked with Aadhaar & State Land Records.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="portal-stat-bar">
+            <div class="stat-item">
+              <span class="stat-num">4,200+</span>
+              <span class="stat-lbl">Quintals Procured</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-num">98.8%</span>
+              <span class="stat-lbl">On-Time Weighing</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-num">₹2,275</span>
+              <span class="stat-lbl">Wheat MSP / Qtl</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Dual Role Authentication Forms -->
+        <div class="auth-form-panel">
+          <div class="auth-card">
+            
+            <!-- Role Toggle Switch -->
+            <div class="role-toggle-container">
+              <div class="role-switch" role="tablist">
+                <button type="button" class="role-tab active" id="tab-farmer" role="tab" aria-selected="true">
+                  <span class="role-icon">🌾</span>
+                  <span>Farmer (किसान)</span>
+                </button>
+                <button type="button" class="role-tab" id="tab-clerk" role="tab" aria-selected="false">
+                  <span class="role-icon">🏢</span>
+                  <span>Mandi Clerk (अधिकारी)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- ========================================== -->
+            <!-- 1. FARMER AUTHENTICATION CONTAINER        -->
+            <!-- ========================================== -->
+            <div class="role-form-content active" id="form-farmer-container">
+              
+              <!-- Sub-mode Toggle: Login vs Register -->
+              <div class="auth-mode-toggle-wrap">
+                <div class="auth-mode-switch" role="tablist">
+                  <button type="button" class="auth-mode-btn active" id="btn-mode-farmer-login" data-role="farmer" data-mode="login">
+                    <span>Sign In (लॉग इन)</span>
+                  </button>
+                  <button type="button" class="auth-mode-btn" id="btn-mode-farmer-reg" data-role="farmer" data-mode="register">
+                    <span>Register (नया पंजीकरण)</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 1A. Farmer Login View -->
+              <div class="auth-sub-view active" id="view-farmer-login">
+                <div class="form-header">
+                  <h2>Farmer Sign In (किसान लॉग इन)</h2>
+                  <p>Access your scheduled slots, weighment receipts & direct MSP pass.</p>
+                </div>
+
+                <form id="form-farmer-login" class="smart-form" novalidate>
+                  <div class="form-group">
+                    <label for="farmer-login-id">Registered Mobile Number / Email <span class="req">*</span></label>
+                    <div class="input-icon-wrap">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                      <input type="text" id="farmer-login-id" class="input-ctrl" placeholder="e.g. 9876543210" value="9876543210" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="farmer-login-pass">Security Password <span class="req">*</span></label>
+                    <div class="input-icon-wrap has-suffix">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                      <input type="password" id="farmer-login-pass" class="input-ctrl" placeholder="Enter your password" value="Password@123" required>
+                      <button type="button" class="btn-toggle-eye" data-target="farmer-login-pass" aria-label="Toggle password visibility">
+                        <svg class="eye-icon eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <svg class="eye-icon eye-closed" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="form-helper-row">
+                    <label class="checkbox-container">
+                      <input type="checkbox" id="farmer-login-remember" checked>
+                      <span class="checkmark"></span>
+                      <span class="label-text">Remember this mobile</span>
+                    </label>
+                    <a href="javascript:void(0)" class="link-sub" id="btn-forgot-farmer">Forgot Password?</a>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary btn-block btn-lg" id="btn-submit-farmer-login">
+                    <span>Sign In to Farmer Portal</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-sm"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                  </button>
+
+                  <div class="auth-switch-prompt">
+                    <span>New to MandiMitra?</span>
+                    <button type="button" class="btn-inline-link" id="link-goto-farmer-reg">Create a Kisan Account</button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- 1B. Farmer Registration View -->
+              <div class="auth-sub-view" id="view-farmer-reg">
+                <div class="form-header">
+                  <h2>Farmer Registration (किसान नया पंजीकरण)</h2>
+                  <p>Register your farm details to unlock verified APMC mandi booking slots.</p>
+                </div>
+
+                <form id="form-farmer-reg" class="smart-form" novalidate>
+                  
+                  <div class="form-group">
+                    <label for="farmer-name">Full Legal Name (पूरा नाम) <span class="req">*</span></label>
+                    <div class="input-icon-wrap">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                      <input type="text" id="farmer-name" class="input-ctrl" placeholder="e.g. Rameshwar Prasad" value="Rameshwar Prasad" required>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="farmer-mobile">Mobile Number <span class="req">*</span></label>
+                      <div class="input-icon-wrap">
+                        <span class="field-prefix">+91</span>
+                        <input type="tel" id="farmer-mobile" class="input-ctrl" placeholder="9876543210" maxlength="10" value="9876543210" required>
+                      </div>
+                      <span class="field-validation-msg" id="msg-farmer-phone"></span>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="farmer-farm-size">Farm Size (Acres / एकड़) <span class="req">*</span></label>
+                      <div class="input-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                        <input type="number" id="farmer-farm-size" class="input-ctrl" placeholder="e.g. 4.5" step="0.1" min="0.1" value="4.5" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="farmer-region">Region / Location (District, State) <span class="req">*</span></label>
+                    <div class="input-icon-wrap">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                      <input type="text" id="farmer-region" class="input-ctrl" placeholder="e.g. Karnal, Haryana" value="Karnal, Haryana" required>
+                    </div>
+                  </div>
+
+                  <!-- Password & Confirm Password Row with Strength Meter -->
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="farmer-reg-pass">Create Password <span class="req">*</span></label>
+                      <div class="input-icon-wrap has-suffix">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <input type="password" id="farmer-reg-pass" class="input-ctrl" placeholder="Min. 6 chars" value="Password@123" required>
+                        <button type="button" class="btn-toggle-eye" data-target="farmer-reg-pass" aria-label="Toggle password visibility">
+                          <svg class="eye-icon eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                          <svg class="eye-icon eye-closed" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>
+                        </button>
+                      </div>
+                      <!-- Dynamic Password Strength Meter -->
+                      <div class="pwd-strength-container" id="farmer-strength-wrap">
+                        <div class="pwd-strength-bars">
+                          <span class="pwd-bar bar-1"></span>
+                          <span class="pwd-bar bar-2"></span>
+                          <span class="pwd-bar bar-3"></span>
+                          <span class="pwd-bar bar-4"></span>
+                        </div>
+                        <span class="pwd-strength-label" id="farmer-strength-label">Password Strength</span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="farmer-reg-confirm">Confirm Password <span class="req">*</span></label>
+                      <div class="input-icon-wrap has-suffix">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <input type="password" id="farmer-reg-confirm" class="input-ctrl" placeholder="Re-enter password" value="Password@123" required>
+                        <button type="button" class="btn-toggle-eye" data-target="farmer-reg-confirm" aria-label="Toggle password visibility">
+                          <svg class="eye-icon eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                          <svg class="eye-icon eye-closed" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>
+                        </button>
+                      </div>
+                      <span class="field-validation-msg" id="msg-farmer-confirm"></span>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="farmer-aadhaar">Aadhaar Number <span class="req">*</span></label>
+                      <div class="input-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+                        <input type="text" id="farmer-aadhaar" class="input-ctrl" placeholder="1234 5678 9012" maxlength="14" value="9021 4412 8890" required>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="farmer-khasra">State Land Record ID (Khasra No.) <span class="req">*</span></label>
+                      <div class="input-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+                        <input type="text" id="farmer-khasra" class="input-ctrl" placeholder="e.g. HR-KAR-2026-KH-492" value="HR-KAR-2026-KH-492" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Document Upload Area -->
+                  <div class="form-group">
+                    <label>Document Upload (Land Record / Pattadar Passbook)</label>
+                    <div class="file-dropzone" id="file-dropzone">
+                      <input type="file" id="farmer-doc" class="file-input-hidden" accept=".pdf,.png,.jpg,.jpeg">
+                      <div class="dropzone-content">
+                        <div class="drop-icon">📄</div>
+                        <div class="drop-text">
+                          <span class="drop-title" id="drop-status-text">Click or drag & drop Land Verification Document</span>
+                          <span class="drop-sub">Supported formats: PDF, JPG, PNG (Max 5MB)</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Legal Consent Checkbox -->
+                  <div class="form-group checkbox-group">
+                    <label class="checkbox-container">
+                      <input type="checkbox" id="farmer-consent" checked required>
+                      <span class="checkmark"></span>
+                      <span class="label-text">
+                        I hereby declare that the crop details and land records submitted are true to the best of my knowledge under the National Agriculture Market (e-NAM) guidelines.
+                      </span>
+                    </label>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary btn-block btn-lg" id="btn-submit-farmer">
+                    <span>Register & Create Kisan Account</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-sm"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </button>
+
+                  <div class="auth-switch-prompt">
+                    <span>Already have an account?</span>
+                    <button type="button" class="btn-inline-link" id="link-goto-farmer-login">Sign In here</button>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+
+            <!-- ========================================== -->
+            <!-- 2. MANDI CLERK AUTHENTICATION CONTAINER   -->
+            <!-- ========================================== -->
+            <div class="role-form-content" id="form-clerk-container">
+              
+              <!-- Sub-mode Toggle: Login vs Register -->
+              <div class="auth-mode-toggle-wrap">
+                <div class="auth-mode-switch clerk-theme" role="tablist">
+                  <button type="button" class="auth-mode-btn active" id="btn-mode-clerk-login" data-role="clerk" data-mode="login">
+                    <span>Officer Sign In (प्रवेश)</span>
+                  </button>
+                  <button type="button" class="auth-mode-btn" id="btn-mode-clerk-reg" data-role="clerk" data-mode="register">
+                    <span>Register Official (पंजीकरण)</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 2A. Mandi Clerk Login View -->
+              <div class="auth-sub-view active" id="view-clerk-login">
+                <div class="form-header">
+                  <h2>Mandi Clerk Sign In</h2>
+                  <p>Authorized personnel portal for APMC Yard weighing & moisture inspection.</p>
+                </div>
+
+                <form id="form-clerk-auth" class="smart-form" novalidate>
+                  <div class="form-group">
+                    <label for="clerk-id">Official Email or Employee ID <span class="req">*</span></label>
+                    <div class="input-icon-wrap">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                      <input type="text" id="clerk-id" class="input-ctrl" placeholder="e.g. CLK-KAR-104 or officer@apmc.gov.in" value="CLK-KAR-104" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="clerk-center">Assigned APMC Mandi Yard <span class="req">*</span></label>
+                    <div class="input-icon-wrap">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><path d="M3 21h18"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
+                      <select id="clerk-center" class="input-ctrl select-ctrl">
+                        <option value="1">Karnal APMC Grain Yard (Main)</option>
+                        <option value="2">Indore Krishi Upaj Mandi</option>
+                        <option value="3">Nashik Lasalgaon APMC</option>
+                        <option value="4">Bathinda Wheat Hub Mandi</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="clerk-pass">Security Password <span class="req">*</span></label>
+                    <div class="input-icon-wrap has-suffix">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                      <input type="password" id="clerk-pass" class="input-ctrl" placeholder="••••••••" value="Password@123" required>
+                      <button type="button" class="btn-toggle-eye" data-target="clerk-pass" aria-label="Toggle password visibility">
+                        <svg class="eye-icon eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <svg class="eye-icon eye-closed" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="form-helper-row">
+                    <label class="checkbox-container">
+                      <input type="checkbox" id="clerk-remember" checked>
+                      <span class="checkmark"></span>
+                      <span class="label-text">Keep me signed in</span>
+                    </label>
+                    <a href="javascript:void(0)" class="link-sub" id="btn-forgot-clerk">Need help?</a>
+                  </div>
+
+                  <button type="submit" class="btn btn-navy btn-block btn-lg" id="btn-submit-clerk">
+                    <span>Sign In as Mandi Clerk</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-sm"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                  </button>
+
+                  <div class="auth-switch-prompt">
+                    <span>New Mandi Officer?</span>
+                    <button type="button" class="btn-inline-link clerk-link" id="link-goto-clerk-reg">Register Official Account</button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- 2B. Mandi Clerk Registration View -->
+              <div class="auth-sub-view" id="view-clerk-reg">
+                <div class="form-header">
+                  <h2>Mandi Clerk Registration</h2>
+                  <p>Register government/APMC official credentials for queue and kanta operation.</p>
+                </div>
+
+                <form id="form-clerk-reg" class="smart-form" novalidate>
+                  
+                  <div class="form-group">
+                    <label for="clerk-reg-name">Full Official Name (अधिकारी नाम) <span class="req">*</span></label>
+                    <div class="input-icon-wrap">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                      <input type="text" id="clerk-reg-name" class="input-ctrl" placeholder="e.g. Rajesh Sharma" value="Rajesh Sharma" required>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="clerk-reg-email">Official Email Address <span class="req">*</span></label>
+                      <div class="input-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                        <input type="email" id="clerk-reg-email" class="input-ctrl" placeholder="officer@apmc.gov.in" value="rajesh.sharma@apmc.gov.in" required>
+                      </div>
+                      <span class="field-validation-msg" id="msg-clerk-email"></span>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="clerk-reg-empid">Employee / Govt ID Number <span class="req">*</span></label>
+                      <div class="input-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                        <input type="text" id="clerk-reg-empid" class="input-ctrl" placeholder="e.g. CLK-PB-209" value="CLK-PB-209" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="clerk-reg-station">Assigned Department / APMC Yard <span class="req">*</span></label>
+                    <div class="input-icon-wrap">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><path d="M3 21h18"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
+                      <select id="clerk-reg-station" class="input-ctrl select-ctrl">
+                        <option value="1">Karnal APMC Grain Yard (Main)</option>
+                        <option value="2">Indore Krishi Upaj Mandi</option>
+                        <option value="3">Nashik Lasalgaon APMC</option>
+                        <option value="4">Bathinda Wheat Hub Mandi</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Password & Confirm Password Row for Clerk with Strength Meter -->
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="clerk-reg-pass">Create Password <span class="req">*</span></label>
+                      <div class="input-icon-wrap has-suffix">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <input type="password" id="clerk-reg-pass" class="input-ctrl" placeholder="Min. 6 chars" value="Password@123" required>
+                        <button type="button" class="btn-toggle-eye" data-target="clerk-reg-pass" aria-label="Toggle password visibility">
+                          <svg class="eye-icon eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                          <svg class="eye-icon eye-closed" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>
+                        </button>
+                      </div>
+                      <div class="pwd-strength-container" id="clerk-strength-wrap">
+                        <div class="pwd-strength-bars">
+                          <span class="pwd-bar bar-1"></span>
+                          <span class="pwd-bar bar-2"></span>
+                          <span class="pwd-bar bar-3"></span>
+                          <span class="pwd-bar bar-4"></span>
+                        </div>
+                        <span class="pwd-strength-label" id="clerk-strength-label">Password Strength</span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="clerk-reg-confirm">Confirm Password <span class="req">*</span></label>
+                      <div class="input-icon-wrap has-suffix">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <input type="password" id="clerk-reg-confirm" class="input-ctrl" placeholder="Re-enter password" value="Password@123" required>
+                        <button type="button" class="btn-toggle-eye" data-target="clerk-reg-confirm" aria-label="Toggle password visibility">
+                          <svg class="eye-icon eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                          <svg class="eye-icon eye-closed" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>
+                        </button>
+                      </div>
+                      <span class="field-validation-msg" id="msg-clerk-confirm"></span>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-navy btn-block btn-lg" id="btn-submit-clerk-reg">
+                    <span>Register Official Account</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-sm"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </button>
+
+                  <div class="auth-switch-prompt">
+                    <span>Already authorized?</span>
+                    <button type="button" class="btn-inline-link clerk-link" id="link-goto-clerk-login">Sign In here</button>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- VIEW 2: FARMER DASHBOARD (LIVE TRACKER & BOOKING)             -->
+    <!-- ============================================================= -->
+    <section class="view-section" id="view-farmer">
+      <div class="dashboard-container">
+        
+        <!-- Farmer Welcome & Quick Summary Banner -->
+        <div class="dash-hero-card">
+          <div class="hero-left">
+            <div class="badge-pill pulse-badge">
+              <span class="dot-live"></span> Live Mandi Link: Connected
+            </div>
+            <h2 id="farmer-hero-title">Namaste, Rameshwar Ji</h2>
+            <p>Track your scheduled procurement journey and lock in your MSP delivery date without standing in long queues.</p>
+          </div>
+          <div class="hero-right">
+            <div class="token-display-box">
+              <span class="token-label">Active Booking Token</span>
+              <span class="token-code" id="active-token-id">MM-2026-8812</span>
+              <span class="token-meta" id="active-token-crop">Wheat (Sharbati) • 45.0 Quintals</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1. LIVE TRACKER SECTION -->
+        <div class="content-card tracker-card">
+          <div class="card-header-flex">
+            <div>
+              <h3 class="card-title">Live Procurement Tracker</h3>
+              <p class="card-subtitle">Real-time status of your crop token from gate arrival to bank payment disbursement.</p>
+            </div>
+            <div class="tracker-live-indicator">
+              <button type="button" class="btn-sm-ghost" id="btn-refresh-tracker" title="Refresh Live Status">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-xs"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+                <span>Sync Status</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Horizontal Visual Stepper -->
+          <div class="stepper-wrapper">
+            <div class="stepper-track">
+              
+              <!-- Step 1: Slot Booked -->
+              <div class="step-node pending" id="step-1" data-step="1">
+                <div class="step-circle">
+                  <span class="step-num">1</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="check-icon"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="step-label-group">
+                  <span class="step-title">Slot Booked</span>
+                  <span class="step-time" id="time-step-1">Pending</span>
+                </div>
+              </div>
+              <div class="step-line" id="line-1"></div>
+
+              <!-- Step 2: Reached Center -->
+              <div class="step-node pending" id="step-2" data-step="2">
+                <div class="step-circle">
+                  <span class="step-num">2</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="check-icon"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="step-label-group">
+                  <span class="step-title">Reached Center</span>
+                  <span class="step-time" id="time-step-2">Pending</span>
+                </div>
+              </div>
+              <div class="step-line" id="line-2"></div>
+
+              <!-- Step 3: Quality Check -->
+              <div class="step-node pending" id="step-3" data-step="3">
+                <div class="step-circle">
+                  <span class="step-num">3</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="check-icon"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="step-label-group">
+                  <span class="step-title">Quality Check</span>
+                  <span class="step-time" id="time-step-3">Pending</span>
+                </div>
+              </div>
+              <div class="step-line" id="line-3"></div>
+
+              <!-- Step 4: Weighed -->
+              <div class="step-node pending" id="step-4" data-step="4">
+                <div class="step-circle">
+                  <span class="step-num">4</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="check-icon"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="step-label-group">
+                  <span class="step-title">Weighed (कांटा)</span>
+                  <span class="step-time" id="time-step-4">Pending</span>
+                </div>
+              </div>
+              <div class="step-line" id="line-4"></div>
+
+              <!-- Step 5: Payment Sent -->
+              <div class="step-node pending" id="step-5" data-step="5">
+                <div class="step-circle">
+                  <span class="step-num">5</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="check-icon"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="step-label-group">
+                  <span class="step-title">Payment Sent</span>
+                  <span class="step-time" id="time-step-5">Pending</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Active Step Realtime Callout Box -->
+          <div class="stepper-callout" id="tracker-callout">
+            <div class="callout-icon-box">📅</div>
+            <div class="callout-text">
+              <strong id="callout-headline">Current Stage: Stage 1: Your Slot is Confirmed &amp; Locked</strong>
+              <p id="callout-desc">Your designated time window is locked. Please bring your QR Token Pass and Original Land Record document to the APMC Gate Entry.</p>
+            </div>
+            <div class="callout-actions">
+              <button type="button" class="btn btn-outline-light btn-sm" id="btn-view-slip">View Digital Slip</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. SLOT BOOKING SECTION -->
+        <div class="booking-grid-layout">
+          
+          <!-- Booking Form Side -->
+          <div class="content-card booking-form-card">
+            <div class="card-header-flex">
+              <div>
+                <h3 class="card-title">Schedule New Delivery Slot</h3>
+                <p class="card-subtitle">Select your crop, quantity, and pick an available date.</p>
+              </div>
+            </div>
+
+            <!-- Capacity Alert Banner -->
+            <div class="capacity-alert-banner" id="capacity-banner">
+              <div class="alert-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-md"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+              </div>
+              <div class="alert-content">
+                <div class="alert-title-row">
+                  <span class="alert-title" id="mandi-alert-name">Karnal APMC Grain Yard (Main)</span>
+                  <span class="capacity-badge" id="capacity-badge-text">Available Quota: 480 / 600 Qtl</span>
+                </div>
+                <div class="capacity-progress-bar">
+                  <div class="progress-fill" id="capacity-fill" style="width: 35%;"></div>
+                </div>
+                <p class="alert-sub" id="capacity-detail-text">Daily procurement limit: 600 Quintals. Safe to book up to 120 Quintals per slot.</p>
+              </div>
+            </div>
+
+            <form id="form-slot-booking" class="smart-form">
+              
+              <div class="form-group">
+                <label for="book-mandi-select">Select Procurement Mandi Center <span class="req">*</span></label>
+                <div class="input-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                  <select id="book-mandi-select" class="input-ctrl select-ctrl" required>
+                    <option value="1" data-capacity="600" data-booked="180">Karnal APMC Grain Yard (Main) - 600 Qtl Capacity</option>
+                    <option value="2" data-capacity="850" data-booked="420">Indore Krishi Upaj Mandi - 850 Qtl Capacity</option>
+                    <option value="3" data-capacity="500" data-booked="490">Nashik Lasalgaon APMC - 500 Qtl Capacity</option>
+                    <option value="4" data-capacity="750" data-booked="200">Bathinda Wheat Hub Mandi - 750 Qtl Capacity</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="book-crop">Crop Variety (फसल) <span class="req">*</span></label>
+                  <div class="input-icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <select id="book-crop" class="input-ctrl select-ctrl" required>
+                      <option value="Wheat (Sharbati)" data-msp="2275">Wheat (गेहूं - Sharbati) • MSP: ₹2,275/Qtl</option>
+                      <option value="Wheat (Lokwan)" data-msp="2275">Wheat (गेहूं - Lokwan) • MSP: ₹2,275/Qtl</option>
+                      <option value="Paddy (Basmati)" data-msp="2320">Paddy (धान - Basmati) • MSP: ₹2,320/Qtl</option>
+                      <option value="Mustard (Sarson)" data-msp="5650">Mustard (सरसों) • MSP: ₹5,650/Qtl</option>
+                      <option value="Chana (Gram)" data-msp="5440">Gram / Chana (चना) • MSP: ₹5,440/Qtl</option>
+                      <option value="Soybean" data-msp="4600">Soybean (सोयाबीन) • MSP: ₹4,600/Qtl</option>
+                    </select>
+                  </div>
+                  <span class="field-hint" id="crop-msp-hint">Govt. MSP: ₹2,275/Qtl</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="book-qty">Estimated Quantity (Quintals / क्विंटल) <span class="req">*</span></label>
+                  <div class="input-icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+                    <input type="number" id="book-qty" class="input-ctrl" placeholder="e.g. 40" min="1" max="500" value="35" required>
+                  </div>
+                  <span class="field-hint" id="est-value-hint">Est. MSP Settlement: ~ ₹79,625</span>
+                </div>
+              </div>
+
+              <!-- Selected Date & Time Slot Display -->
+              <div class="selected-date-preview">
+                <div class="sel-date-left">
+                  <span class="sel-date-lbl">Selected Slot Window:</span>
+                  <span class="sel-date-val" id="selected-date-display">2026-09-18 • 10:00 - 12:00 (Available)</span>
+                </div>
+                <input type="hidden" id="selected-booking-date" value="2026-09-18">
+                <input type="hidden" id="selected-booking-slot" value="10:00 - 12:00">
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block btn-lg" id="btn-confirm-booking">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-sm"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                <span>Confirm Procurement Slot</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Smart Slot Booking (KisanSeva UI): Date Tabs & 2-Hour Time Slot Grid -->
+          <div class="content-card smart-slot-card">
+            <div class="card-header-flex">
+              <div>
+                <h4 class="card-title">Smart Slot Booking (2-Hour Window)</h4>
+                <p class="card-subtitle">Select procurement date & reserve an express weighbridge entry slot</p>
+              </div>
+              <div class="slot-mode-tag">
+                <span class="pulse-dot"></span>
+                <span>Live IoT Queue</span>
+              </div>
+            </div>
+
+            <!-- Horizontal Date Tab Selector -->
+            <div class="date-tabs-container">
+              <div class="date-tabs-bar" id="date-tabs-bar" role="tablist" aria-label="Procurement Dates">
+                <!-- Rendered dynamically by app.js -->
+              </div>
+            </div>
+
+            <!-- 2-Hour Time Slot Grid -->
+            <div class="slots-grid-wrapper">
+              <div class="slots-header-sub">
+                <span class="slots-sub-title">Select 2-Hour Time Window</span>
+                <div class="slots-legend">
+                  <span class="leg-pill pill-avail"><span class="leg-dot green"></span> Available</span>
+                  <span class="leg-pill pill-full"><span class="leg-dot red"></span> Slot Full</span>
+                </div>
+              </div>
+
+              <div class="time-slots-grid" id="time-slots-grid">
+                <!-- Rendered dynamically by app.js -->
+              </div>
+            </div>
+
+            <div class="calendar-footer-note">
+              <div class="note-icon">⚡</div>
+              <p>Reserved 2-hour slots receive <strong>Priority RFID Gate Access</strong>. Arriving within your confirmed window guarantees weighbridge clearance within 20 minutes.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 3. FARMER ID CARD — revealed after slot booking -->
+        <div class="content-card farmer-id-card" id="farmer-id-card" style="display:none;">
+          <div class="card-header-flex">
+            <div>
+              <h3 class="card-title">🪪 Farmer ID &amp; Procurement Token</h3>
+              <p class="card-subtitle">Your verified identity and booking details — present this at the APMC gate.</p>
+            </div>
+            <button type="button" class="btn btn-outline-navy btn-sm" id="btn-print-id-card" title="Print / Download ID Card">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-xs"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+              <span>Print Pass</span>
+            </button>
+          </div>
+
+          <div class="id-card-layout">
+            <!-- Left: Farmer Identity -->
+            <div class="id-card-farmer-section">
+              <div class="id-card-avatar-row">
+                <div class="id-card-avatar" id="idcard-avatar-initials">RP</div>
+                <div>
+                  <div class="id-card-name" id="idcard-farmer-name">Rameshwar Prasad</div>
+                  <div class="id-card-role-tag">🌾 Verified Farmer (किसान)</div>
+                </div>
+              </div>
+              <div class="id-card-detail-grid">
+                <div class="id-detail-item">
+                  <span class="id-detail-label">📱 Mobile</span>
+                  <span class="id-detail-val" id="idcard-mobile">+91 9876543210</span>
+                </div>
+                <div class="id-detail-item">
+                  <span class="id-detail-label">🪪 Aadhaar No.</span>
+                  <span class="id-detail-val" id="idcard-aadhaar">9021 4412 8890</span>
+                </div>
+                <div class="id-detail-item">
+                  <span class="id-detail-label">📋 Khasra / Land ID</span>
+                  <span class="id-detail-val" id="idcard-khasra">HR-KAR-2026-KH-492</span>
+                </div>
+                <div class="id-detail-item">
+                  <span class="id-detail-label">✅ Land Verified</span>
+                  <span class="id-detail-val id-verified-badge">Bhoomi / Bhulekh ✓</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="id-card-divider"></div>
+
+            <!-- Right: Token & Booking Details -->
+            <div class="id-card-token-section">
+              <div class="token-qr-badge">
+                <span class="tqr-label">TOKEN ID</span>
+                <span class="tqr-code" id="idcard-token-id">MM-2026-8812</span>
+                <div class="tqr-barcode">
+                  <div class="bar"></div><div class="bar short"></div><div class="bar"></div>
+                  <div class="bar short"></div><div class="bar"></div><div class="bar short"></div>
+                  <div class="bar"></div><div class="bar short"></div><div class="bar"></div>
+                </div>
+              </div>
+              <div class="id-card-detail-grid">
+                <div class="id-detail-item">
+                  <span class="id-detail-label">🌾 Crop</span>
+                  <span class="id-detail-val" id="idcard-crop">Wheat (Sharbati)</span>
+                </div>
+                <div class="id-detail-item">
+                  <span class="id-detail-label">⚖️ Quantity</span>
+                  <span class="id-detail-val" id="idcard-qty">45 Quintals</span>
+                </div>
+                <div class="id-detail-item">
+                  <span class="id-detail-label">🏢 Mandi Center</span>
+                  <span class="id-detail-val" id="idcard-mandi">Karnal APMC Grain Yard</span>
+                </div>
+                <div class="id-detail-item">
+                  <span class="id-detail-label">📅 Slot Date</span>
+                  <span class="id-detail-val" id="idcard-date">—</span>
+                </div>
+                <div class="id-detail-item">
+                  <span class="id-detail-label">💰 Est. MSP Value</span>
+                  <span class="id-detail-val id-msp-highlight" id="idcard-msp">—</span>
+                </div>
+                <div class="id-detail-item">
+                  <span class="id-detail-label">🔒 Status</span>
+                  <span class="id-detail-val" id="idcard-status"><span class="status-tag booked">Slot Confirmed</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer strip -->
+          <div class="id-card-footer">
+            <span>🏛️ MandiMitra e-Procurement Portal • Government of India • Ministry of Agriculture</span>
+            <span id="idcard-issued-at"></span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- VIEW 3: CLERK DASHBOARD (QUEUE MANAGEMENT)                    -->
+    <!-- ============================================================= -->
+    <section class="view-section" id="view-clerk">
+      <div class="dashboard-container">
+        
+        <!-- Clerk Header Row -->
+        <div class="clerk-hero-bar">
+          <div>
+            <div class="badge-pill badge-navy">Mandi Yard Control Desk</div>
+            <h2>Today's Procurement Queue Management</h2>
+            <p>Live weighbridge schedule, moisture test authorizations, and digital grain verification.</p>
+          </div>
+          <div class="clerk-yard-status">
+            <div class="yard-pill">
+              <span class="kanta-indicator online" id="clerk-kanta-status"></span>
+              <span>Weighbridge Kanta: <strong>ONLINE</strong></span>
+            </div>
+            <button type="button" class="btn btn-outline-navy btn-sm" id="btn-clerk-iot-sim" title="Simulate Hardware Weighbridge Ping">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-xs"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
+              <span>IoT Weighbridge Test</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 1. STATS GRID -->
+        <div class="stats-grid">
+          
+          <div class="stat-card">
+            <div class="stat-card-icon stat-icon-navy">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div class="stat-card-info">
+              <span class="stat-card-label">Total Slots Today</span>
+              <span class="stat-card-val" id="stat-total-slots">5 Slots</span>
+              <span class="stat-card-sub">Allocated: 255.0 Quintals</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-icon stat-icon-green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="stat-card-info">
+              <span class="stat-card-label">Checked-In / Reached</span>
+              <span class="stat-card-val" id="stat-checked-in">3 Farmers</span>
+              <span class="stat-card-sub">Gate verified & ready</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-icon stat-icon-amber">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <div class="stat-card-info">
+              <span class="stat-card-label">On Hold</span>
+              <span class="stat-card-val" id="stat-on-hold">1 Held</span>
+              <span class="stat-card-sub">Moisture test pending</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-icon stat-icon-emerald">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/></svg>
+            </div>
+            <div class="stat-card-info">
+              <span class="stat-card-label">Weighed & Dispatched</span>
+              <span class="stat-card-val" id="stat-weighed-count">46.2 Qtl</span>
+              <span class="stat-card-sub">Direct DBT Ready</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 2. QUEUE TABLE & ACTIONS -->
+        <div class="content-card queue-table-card">
+          <div class="card-header-flex">
+            <div>
+              <h3 class="card-title">Live Procurement Queue (Today's Farmers)</h3>
+              <p class="card-subtitle">Authorize gate passes, inspect grain quality, or hold bags based on moisture analysis.</p>
+            </div>
+            <div class="filter-controls">
+              <input type="text" id="queue-search" class="input-ctrl search-ctrl" placeholder="Filter by Token or Name...">
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="queue-table" id="queue-data-table">
+              <thead>
+                <tr>
+                  <th>Token ID</th>
+                  <th>Farmer Name & Contact</th>
+                  <th>Crop Variety</th>
+                  <th>Est. Qty (Qtl)</th>
+                  <th>Current Status</th>
+                  <th>Remarks / Hold Reason</th>
+                  <th class="text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="queue-table-body">
+                <!-- Dynamically populated by app.js -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Floating Circular Action Button (FAB): Kisan Bot Assist -->
+  <button type="button" class="bot-assist-fab" id="btn-bot-assist" aria-label="Open Kisan Bot Assist" title="Ask Kisan Sahayak AI Bot (24x7 Voice & Chat)">
+    <span class="bot-pulse" aria-hidden="true"></span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bot-icon-svg">
+      <path d="M12 8V4H8"/>
+      <rect width="16" height="12" x="4" y="8" rx="2"/>
+      <path d="M2 14h2"/>
+      <path d="M20 14h2"/>
+      <path d="M15 13v2"/>
+      <path d="M9 13v2"/>
+    </svg>
+    <span class="btn-text">Bot Assist</span>
+  </button>
+
+  <!-- ============================================================= -->
+  <!-- MODAL: BOT ASSIST (KISAN SAHAYAK AI)                          -->
+  <!-- ============================================================= -->
+  <div class="modal-backdrop" id="modal-bot-assist" aria-hidden="true">
+    <div class="modal-dialog bot-modal">
+      <div class="modal-header">
+        <div class="bot-header-title">
+          <div class="bot-avatar">🤖</div>
+          <div>
+            <h3>Kisan Sahayak (किसान सहायक AI)</h3>
+            <span class="bot-subtitle">24x7 Mandi, Farming & Yojana Voice Assistant</span>
+          </div>
+        </div>
+        <div class="bot-header-controls">
+          <!-- Voice Audio Output Toggle -->
+          <button type="button" class="btn-bot-toggle-audio active" id="btn-toggle-bot-audio" title="Toggle voice answers (आवाज़ में उत्तर सुनें)">
+            <span class="audio-icon">🔊</span>
+            <span class="audio-label">Voice On</span>
+          </button>
+          <!-- Voice Language Toggle -->
+          <button type="button" class="btn-bot-lang" id="btn-bot-lang-toggle" title="Switch Voice Language (भाषा बदलें)">
+            <span id="bot-lang-label">हिन्दी</span>
+          </button>
+          <button type="button" class="btn-close" id="btn-close-bot" aria-label="Close modal">×</button>
+        </div>
+      </div>
+      <div class="modal-body bot-chat-body" id="bot-chat-history">
+        <div class="chat-bubble bot">
+          <p><strong>Namaste! 🙏 I am MandiMitra's Kisan Sahayak Voice & Chat AI.</strong></p>
+          <p>आप मुझसे खेती, फसल बिक्री, सरकारी योजनाओं और मंडी के बारे में बोलकर या लिखकर पूछ सकते हैं। (Ask anything about farming, selling, MSP & government schemes by voice or text):</p>
+          <ul>
+            <li>🏛️ <strong>PM-Kisan</strong> & <strong>Fasal Bima (PMFBY)</strong> Yojana</li>
+            <li>🌾 <strong>2026 MSP Rates</strong> & Direct Bank DBT Payment</li>
+            <li>💳 <strong>Kisan Credit Card (KCC)</strong> 4% Interest Loan</li>
+            <li>☀️ <strong>PM Kusum</strong> Solar Irrigation Pump 60% Subsidy</li>
+            <li>💧 <strong>Moisture limit (12%)</strong> & APMC Yard Slot Booking</li>
+            <li>🧪 <strong>Soil Health Card</strong>, Nano Urea & Pest Control</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Voice Live Status Indicator -->
+      <div class="voice-status-bar" id="voice-status-bar" style="display: none;">
+        <span class="mic-pulsing-dot"></span>
+        <span id="voice-status-text">Listening... बोलिए, हम सुन रहे हैं...</span>
+        <button type="button" class="btn-voice-cancel" id="btn-voice-cancel">Cancel</button>
+      </div>
+
+      <div class="bot-quick-prompts">
+        <button type="button" class="prompt-chip" data-query="What are the details of PM Kisan Samman Nidhi Yojana?">🏛️ PM-Kisan ₹6000</button>
+        <button type="button" class="prompt-chip" data-query="How does PM Fasal Bima Yojana crop insurance work?">🛡️ Fasal Bima</button>
+        <button type="button" class="prompt-chip" data-query="Tell me about Kisan Credit Card KCC loan at 4 percent interest">💳 KCC 4% Loan</button>
+        <button type="button" class="prompt-chip" data-query="What is the current MSP rate for Wheat and crops?">🌾 MSP Rates</button>
+        <button type="button" class="prompt-chip" data-query="How does direct bank DBT payment work after grain weighing?">💰 Selling & DBT</button>
+        <button type="button" class="prompt-chip" data-query="What is the subsidy under PM Kusum Solar Pump Yojana?">☀️ Solar Pump</button>
+        <button type="button" class="prompt-chip" data-query="How to use Soil Health Card and IFFCO Nano Urea?">🧪 Soil & Nano Urea</button>
+        <button type="button" class="prompt-chip" data-query="How to control Yellow Rust and crop pests?">🐛 Pest & Diseases</button>
+      </div>
+      <div class="modal-footer chat-input-bar">
+        <!-- Voice Input Microphone Button -->
+        <button type="button" class="btn-voice-mic" id="btn-voice-mic" title="Click to speak your question in Hindi or English (बोलकर पूछें)" aria-label="Voice Assistant Microphone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="mic-svg">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+        </button>
+        <input type="text" id="bot-user-input" class="input-ctrl" placeholder="Type or click 🎙️ to speak in Hindi / English...">
+        <button type="button" class="btn btn-primary" id="btn-send-bot">Ask</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- MODAL: HOLD REASON INPUT MODAL (CLERK)                        -->
+  <!-- ============================================================= -->
+  <div class="modal-backdrop" id="modal-hold-action" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Hold Crop Verification</h3>
+        <button type="button" class="btn-close" id="btn-close-hold" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <p>You are placing Token <strong id="hold-token-label">MM-2026-XXXX</strong> on hold.</p>
+        <div class="form-group">
+          <label for="hold-reason-select">Select Inspection Issue:</label>
+          <select id="hold-reason-select" class="input-ctrl select-ctrl">
+            <option value="High moisture level detected (Moisture > 12.0%)">High moisture level detected (> 12.0%)</option>
+            <option value="Foreign matter / Immature grains exceeding 2% limit">Foreign matter exceeding 2% limit</option>
+            <option value="Aadhaar Land Record (Khasra) discrepancy">Land record / Khasra mismatch</option>
+            <option value="Weighbridge overload - rescheduled to next batch">Weighbridge slot reschedule</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" id="btn-cancel-hold">Cancel</button>
+        <button type="button" class="btn btn-danger" id="btn-confirm-hold">Confirm Hold Status</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Vanilla JS Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
