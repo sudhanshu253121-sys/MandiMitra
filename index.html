@@ -784,12 +784,12 @@
               <div class="alert-content">
                 <div class="alert-title-row">
                   <span class="alert-title" id="mandi-alert-name">Karnal APMC Grain Yard (Main)</span>
-                  <span class="capacity-badge" id="capacity-badge-text">Available Quota: 480 / 600 Qtl</span>
+                  <span class="capacity-badge" id="capacity-badge-text">Available Quota: 1320 / 1500 Qtl</span>
                 </div>
                 <div class="capacity-progress-bar">
                   <div class="progress-fill" id="capacity-fill" style="width: 35%;"></div>
                 </div>
-                <p class="alert-sub" id="capacity-detail-text">Daily procurement limit: 600 Quintals. Safe to book up to 120 Quintals per slot.</p>
+                <p class="alert-sub" id="capacity-detail-text">Daily procurement limit: 1500 Quintals. Safe to book up to 120 Quintals per slot.</p>
               </div>
             </div>
 
@@ -800,10 +800,10 @@
                 <div class="input-icon-wrap">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
                   <select id="book-mandi-select" class="input-ctrl select-ctrl" required>
-                    <option value="1" data-capacity="600" data-booked="180">Karnal APMC Grain Yard (Main) - 600 Qtl Capacity</option>
-                    <option value="2" data-capacity="850" data-booked="420">Indore Krishi Upaj Mandi - 850 Qtl Capacity</option>
-                    <option value="3" data-capacity="500" data-booked="490">Nashik Lasalgaon APMC - 500 Qtl Capacity</option>
-                    <option value="4" data-capacity="750" data-booked="200">Bathinda Wheat Hub Mandi - 750 Qtl Capacity</option>
+                    <option value="1" data-capacity="1500" data-booked="180">Karnal APMC • 1500 Qtl</option>
+                    <option value="2" data-capacity="1500" data-booked="420">Indore Mandi • 1500 Qtl</option>
+                    <option value="3" data-capacity="1500" data-booked="490">Nashik Mandi • 1500 Qtl</option>
+                    <option value="4" data-capacity="1500" data-booked="200">Bathinda Mandi • 1500 Qtl</option>
                   </select>
                 </div>
               </div>
@@ -814,15 +814,36 @@
                   <div class="input-icon-wrap">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="field-icon"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                     <select id="book-crop" class="input-ctrl select-ctrl" required>
-                      <option value="Wheat (Sharbati)" data-msp="2275">Wheat (गेहूं - Sharbati) • MSP: ₹2,275/Qtl</option>
-                      <option value="Wheat (Lokwan)" data-msp="2275">Wheat (गेहूं - Lokwan) • MSP: ₹2,275/Qtl</option>
-                      <option value="Paddy (Basmati)" data-msp="2320">Paddy (धान - Basmati) • MSP: ₹2,320/Qtl</option>
-                      <option value="Mustard (Sarson)" data-msp="5650">Mustard (सरसों) • MSP: ₹5,650/Qtl</option>
-                      <option value="Chana (Gram)" data-msp="5440">Gram / Chana (चना) • MSP: ₹5,440/Qtl</option>
-                      <option value="Soybean" data-msp="4600">Soybean (सोयाबीन) • MSP: ₹4,600/Qtl</option>
+                      <optgroup label="Kharif Crops">
+                        <option value="Paddy - Common" data-msp="2441">Paddy - Common • ₹2,441/Qtl</option>
+                        <option value="Paddy - Grade A" data-msp="2461">Paddy - Grade A • ₹2,461/Qtl</option>
+                        <option value="Jowar - Hybrid" data-msp="4023">Jowar - Hybrid • ₹4,023/Qtl</option>
+                        <option value="Jowar - Maldandi" data-msp="4073">Jowar - Maldandi • ₹4,073/Qtl</option>
+                        <option value="Bajra" data-msp="2900">Bajra • ₹2,900/Qtl</option>
+                        <option value="Ragi" data-msp="5205">Ragi • ₹5,205/Qtl</option>
+                        <option value="Maize" data-msp="2410">Maize • ₹2,410/Qtl</option>
+                        <option value="Tur/Arhar" data-msp="8450">Tur/Arhar • ₹8,450/Qtl</option>
+                        <option value="Moong" data-msp="8780">Moong • ₹8,780/Qtl</option>
+                        <option value="Urad" data-msp="8200">Urad • ₹8,200/Qtl</option>
+                        <option value="Groundnut" data-msp="7517">Groundnut • ₹7,517/Qtl</option>
+                        <option value="Sunflower Seed" data-msp="8343">Sunflower Seed • ₹8,343/Qtl</option>
+                        <option value="Soybean (Yellow)" data-msp="5708">Soybean (Yellow) • ₹5,708/Qtl</option>
+                        <option value="Sesamum (Til)" data-msp="10346">Sesamum (Til) • ₹10,346/Qtl</option>
+                        <option value="Nigerseed (Ramtil)" data-msp="10052">Nigerseed (Ramtil) • ₹10,052/Qtl</option>
+                        <option value="Cotton - Medium Staple" data-msp="8267">Cotton - Medium Staple • ₹8,267/Qtl</option>
+                        <option value="Cotton - Long Staple" data-msp="8667">Cotton - Long Staple • ₹8,667/Qtl</option>
+                      </optgroup>
+                      <optgroup label="Rabi Crops">
+                        <option value="Wheat (Gehu)" data-msp="2585">Wheat (Gehu) • ₹2,585/Qtl</option>
+                        <option value="Barley (Jau)" data-msp="2150">Barley (Jau) • ₹2,150/Qtl</option>
+                        <option value="Gram (Chana)" data-msp="5875">Gram (Chana) • ₹5,875/Qtl</option>
+                        <option value="Masur (Lentil)" data-msp="7000">Masur (Lentil) • ₹7,000/Qtl</option>
+                        <option value="Rapeseed & Mustard (Sarson)" data-msp="6200">Rapeseed &amp; Mustard • ₹6,200/Qtl</option>
+                        <option value="Safflower (Kardi)" data-msp="6540">Safflower (Kardi) • ₹6,540/Qtl</option>
+                      </optgroup>
                     </select>
                   </div>
-                  <span class="field-hint" id="crop-msp-hint">Govt. MSP: ₹2,275/Qtl</span>
+                  <span class="field-hint" id="crop-msp-hint">Govt. MSP: ₹2,441/Qtl</span>
                 </div>
 
                 <div class="form-group">

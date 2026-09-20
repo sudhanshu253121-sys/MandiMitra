@@ -26,6 +26,7 @@ Base.metadata.create_all(bind=engine)
 # Secret key required for IoT weighbridge hardware integration
 IOT_SECRET_KEY = os.getenv("IOT_SECRET_KEY", "KANTA_SECRET_2026")
 AUTH_SECRET_KEY = os.getenv("AUTH_SECRET_KEY", "MANDIMITRA_JWT_SECRET_2026")
+MANDI_DAILY_CAPACITY_QUINTALS = 1500.0
 
 def hash_password(password: str, salt: Optional[str] = None):
     """Hash password using PBKDF2 with SHA-256 and unique cryptographic salt."""
@@ -89,10 +90,10 @@ def seed_sample_data(db: Session):
     """Seed sample Mandi Centers, preliminary slots, and demo accounts if DB is empty."""
     if db.query(MandiCenter).count() == 0:
         centers = [
-            MandiCenter(id=1, name="Karnal APMC Grain Yard (Main)", daily_capacity_quintals=600.0, is_kanta_active=True, location="Karnal, Haryana"),
-            MandiCenter(id=2, name="Indore Krishi Upaj Mandi", daily_capacity_quintals=850.0, is_kanta_active=True, location="Indore, Madhya Pradesh"),
-            MandiCenter(id=3, name="Nashik Lasalgaon APMC", daily_capacity_quintals=500.0, is_kanta_active=True, location="Nashik, Maharashtra"),
-            MandiCenter(id=4, name="Bathinda Wheat Hub Mandi", daily_capacity_quintals=750.0, is_kanta_active=False, location="Bathinda, Punjab")
+            MandiCenter(id=1, name="Karnal APMC Grain Yard (Main)", daily_capacity_quintals=MANDI_DAILY_CAPACITY_QUINTALS, is_kanta_active=True, location="Karnal, Haryana"),
+            MandiCenter(id=2, name="Indore Krishi Upaj Mandi", daily_capacity_quintals=MANDI_DAILY_CAPACITY_QUINTALS, is_kanta_active=True, location="Indore, Madhya Pradesh"),
+            MandiCenter(id=3, name="Nashik Lasalgaon APMC", daily_capacity_quintals=MANDI_DAILY_CAPACITY_QUINTALS, is_kanta_active=True, location="Nashik, Maharashtra"),
+            MandiCenter(id=4, name="Bathinda Wheat Hub Mandi", daily_capacity_quintals=MANDI_DAILY_CAPACITY_QUINTALS, is_kanta_active=False, location="Bathinda, Punjab")
         ]
         db.add_all(centers)
         db.commit()
@@ -164,6 +165,16 @@ def seed_sample_data(db: Session):
             )
         ]
         db.add_all(sample_slots)
+        db.commit()
+
+    # Keep existing centers aligned when the operational limit changes.
+    centers = db.query(MandiCenter).all()
+    changed = False
+    for center in centers:
+        if center.daily_capacity_quintals != MANDI_DAILY_CAPACITY_QUINTALS:
+            center.daily_capacity_quintals = MANDI_DAILY_CAPACITY_QUINTALS
+            changed = True
+    if changed:
         db.commit()
 
     # Seed demo users if no auth users exist

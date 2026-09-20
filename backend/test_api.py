@@ -35,14 +35,14 @@ def test_api_suite():
     assert "MM-2026-" in token_id
     assert data["status"] == "SLOT_BOOKED"
 
-    print("\n--- 4. Testing Capacity Limit Exceeded (Invalid, > 600 Qtl) ---")
+    print("\n--- 4. Testing Capacity Limit Exceeded (Invalid, > 1500 Qtl) ---")
     oversized_payload = {
         "farmer_id": "TEST-FARMER-OVERFLOW",
         "farmer_name": "Massive Grain Co",
         "mandi_id": 1,
         "booking_date": "2026-10-15",
         "crop_type": "Wheat",
-        "estimated_quintals": 1000.0  # Center 1 capacity is 600 Qtl
+        "estimated_quintals": 2000.0  # Every center has a 1500 Qtl capacity
     }
     res = client.post("/book-slot", json=oversized_payload)
     assert res.status_code == 400

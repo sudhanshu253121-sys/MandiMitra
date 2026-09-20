@@ -8,7 +8,7 @@ class MandiCenter(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), nullable=False)
-    daily_capacity_quintals = Column(Float, nullable=False, default=500.0)
+    daily_capacity_quintals = Column(Float, nullable=False, default=1500.0)
     is_kanta_active = Column(Boolean, default=True)  # Hardware weighbridge connectivity
     location = Column(String(100), default="Sector 4 APMC Mandi")
 

@@ -78,10 +78,10 @@
       }
     ],
     mandiData: {
-      1: { name: 'Karnal APMC Grain Yard (Main)', capacity: 600, booked: 255 },
-      2: { name: 'Indore Krishi Upaj Mandi', capacity: 850, booked: 420 },
-      3: { name: 'Nashik Lasalgaon APMC', capacity: 500, booked: 490 },
-      4: { name: 'Bathinda Wheat Hub Mandi', capacity: 750, booked: 200 }
+      1: { name: 'Karnal APMC Grain Yard (Main)', capacity: 1500, booked: 255 },
+      2: { name: 'Indore Krishi Upaj Mandi', capacity: 1500, booked: 420 },
+      3: { name: 'Nashik Lasalgaon APMC', capacity: 1500, booked: 490 },
+      4: { name: 'Bathinda Wheat Hub Mandi', capacity: 1500, booked: 200 }
     }
   };
 
@@ -916,7 +916,7 @@
 
     function calculateEstMSP() {
       const qty = parseFloat(qtyInput.value) || 0;
-      const msp = parseFloat(cropSelect.selectedOptions[0]?.dataset?.msp) || 2275;
+      const msp = parseFloat(cropSelect.selectedOptions[0]?.dataset?.msp) || 2441;
       const total = qty * msp;
       if (estHint) estHint.textContent = `Est. MSP Settlement: ~ ₹${total.toLocaleString('en-IN')}`;
       const cropMspHint = document.getElementById('crop-msp-hint');
